@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+  
+
+  <!-- Servlets --><servlet>
+  	<servlet-name>MainPageServlet</servlet-name>
+  	<servlet-class>Team_Pro.servlet.MainPageServlet</servlet-class>
+</servlet>
+	<servlet>
+    <servlet-name>LogInServlet</servlet-name>
+    <servlet-class>Team_Pro.servlet.LogInServlet</servlet-class>
+  </servlet><servlet>
+  	<servlet-name>CreateAccountServlet</servlet-name>
+  	<servlet-class>Team_Pro.servlet.CreateAccountServlet</servlet-class>
+  </servlet><servlet>
+  	<servlet-name>UserPageServlet</servlet-name>
+  	<servlet-class>Team_Pro.servlet.UserPageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>FetchPostsAjaxServlet</servlet-name>
+    <servlet-class>Team_Pro.servlet.FetchPostsAjaxServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ModeratorPageServlet</servlet-name>
+  	<servlet-class>Team_Pro.servlet.ModeratorPageServlet</servlet-class>
+  </servlet>
+
+
+  <!-- Servlet mappings --><servlet-mapping>
+		<servlet-name>MainPageServlet</servlet-name>
+		<url-pattern>/MainPage</url-pattern>
+</servlet-mapping>
+	<servlet-mapping>
+    <servlet-name>LogInServlet</servlet-name>
+    <url-pattern>/LogIn</url-pattern>
+  </servlet-mapping><servlet-mapping>
+		<servlet-name>CreateAccountServlet</servlet-name>
+		<url-pattern>/CreateAccount</url-pattern>
+	</servlet-mapping><servlet-mapping>
+		<servlet-name>UserPageServlet</servlet-name>
+		<url-pattern>/UserPage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+	  <servlet-name>FetchPostsAjaxServlet</servlet-name>
+	  <url-pattern>/ajax/FetchPosts/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ModeratorPageServlet</servlet-name>
+		<url-pattern>/ModeratorPage</url-pattern>
+	</servlet-mapping>
+</web-app>
