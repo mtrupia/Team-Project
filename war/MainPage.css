@@ -76,6 +76,9 @@ button{
 td#texter {
 	border: 3px solid black;
 	padding: 28px;
+	width: 300px;
+	word-break: break-all;
+        white-space: normal;
 }
 td#remover {
 	position: absolute;
@@ -97,3 +100,6 @@ td#flagger {
 	margin-top: 5px;
 	right: 7px;
 }}}}
+textarea {
+	color: #d4af37;
+}
