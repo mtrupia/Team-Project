@@ -85,14 +85,12 @@ public class MainPageServlet extends HttpServlet {
 					resp.sendRedirect(req.getContextPath() + "/MainPage");
 					return; 
 				}
-				// no more tags
-				String tag = req.getParameter("tag");
 				User user = (User) req.getSession().getAttribute("user");
 				if (text.toLowerCase().contains("tube")) {
 					text = text.substring(32);
 					text = "https://www.youtube.com/embed/" + text;
 				}
-				controller.post(text, tag, user.getId());
+				controller.post(text, user.getId());
 				resp.sendRedirect(req.getContextPath() + "/MainPage");
 				return;
 			} else if(req.getParameter("ModLink") != null){
@@ -111,7 +109,8 @@ public class MainPageServlet extends HttpServlet {
 					}
 					if (req.getParameter("flag" + Integer.toString(testId)) != null) {
 						req.removeAttribute("flag" + Integer.toString(testId));
-						controller.flag(testId);
+						User user = (User) req.getSession().getAttribute("user");
+						controller.flag(user.getId(), testId);
 						resp.sendRedirect(req.getContextPath() + "/MainPage");
 						return;
 					}

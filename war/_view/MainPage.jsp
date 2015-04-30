@@ -5,98 +5,83 @@
 <html>
 	<head>
 		<title>Main Page</title>
-		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function() {
-				var highestId = ${HighestId};
-				$("#fetchComments").click(function() {
-					// Use AJAX to fetch additional posts
-					$.ajax({
-							type: "POST",
-							url: "${pageContext.servletContext.contextPath}/ajax/FetchPosts",
-							data: { "startingId": highestId+1 },
-							dataType: "json",
-							success:
-								function(data, textStatus, jqXHR) {
-				            		// TODO: add new posts to the #comments table
-				            		alert("Got some stuff!");
-				            	},
-							error:
-								function(jqXHR, textStatus, errorThrown) {
-				            		// TODO: better way to display error messages
-				            		console.log("An error occurred: " + errorThrown);
-				            	}
-					});
-				});
-			});
-		</script>-->
+		<link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/MainPage.css"> 
 	</head>
 
 	<body>
-		<form action="${pageContext.servletContext.contextPath}/MainPage" method="post">
-			<input type="Submit" name="userPage" value="My Page">
+	<div class="titler">
+		<h1>NameLess</h1>
+	</div>
+		<form class="posty" action="${pageContext.servletContext.contextPath}/MainPage" method="post">
+			<div class="showy">
+				<td><input type="Submit" name="allPosts" value="Show all!"></td>
+			</div>
 			<table>
 				<tr>
-					<td class="label">Comment:</td>
 					<td>
 					<textarea rows="4" cols="50" name="text" placeholder="What's going on?" role="textbox" autocomplete="off"></textarea>
+					<div class="postyy">
 					<input type="Submit" name="post" value="Post!">
+					</div>
 					</td>
-				</tr>
-				<tr>
-					<td><input type="Submit" name="allPosts" value="Show all!"></td>
 				</tr>
 			</table>
 		</form>
-		<form action="${pageContext.servletContext.contextPath}/MainPage" method="post">
+		<form class="searchy" action="${pageContext.servletContext.contextPath}/MainPage" method="post">
 			<table>
 		        <tr>
-		            <td class="label">Search:</td>
 					<td>
-					<input type="text" name="searching" size="30" value="" />
+					<input type="text" placeholder="Search something..." name="searching" size="30" value="" />
 					</td>
 		            <td><input type="Submit" name="search" value="Search"></td> 
 		        </tr>
 			</table>
 		</form>
 		<form action="${pageContext.servletContext.contextPath}/MainPage" method="post">
+			<div class="commenty">
 			<table id="comments">
 				<c:forEach items="${Posts}" var="Comment">
-				        <tr>
-					        <c:if test="${Comment.userId == user.id}">
-					        	<td><button type="submit" name="delete${Comment.id}" value="clicked">
-								<img src="http://log.concept2.com/images/delete.png"/>
-								</button></td>
-							</c:if>
+				        <tr align="center">
 				            <c:choose>
 							<c:when test="${fn:contains(Comment.text, 'youtube')}">
-						    	<td>
-						    	<iframe width="560" height="315" src="${Comment.text}" frameborder="0" allowfullscreen></iframe>
+						    	<td id="texter">
+						    	<iframe width="300" height="215" src="${Comment.text}" frameborder="0" allowfullscreen></iframe>
 								</td>
 						    </c:when>
 						    <c:when test="${fn:contains(Comment.text, 'http')}">
-						        <td><img src="${Comment.text}" width="470" height="470" /></td>
+						        <td id="texter"><img src="${Comment.text}" width="300" height="215" /></td>
 						    </c:when>
 						    <c:otherwise>
-						    	<td><c:out value="${Comment.text}"/></td>
+						    	<td id="texter"><c:out value="${Comment.text}"/></td>
 						    </c:otherwise> 
-						    </c:choose></td> 
-				            <td><button type="submit" name="like${Comment.id}" value="clicked">
+						    </c:choose></td>
+				            <td id="liker"><button type="submit" name="like${Comment.id}" value="clicked">
 							<img src="http://www.sciepub.com/images/like.png"/>
 							</button></td></td>
-				            <td><c:out value="Total likes: ${Comment.likes}"/></td> 
-				            <td><button type="submit" name="flag${Comment.id}" value="clicked">
+				            <td id="likertext"><c:out value="${Comment.likes}"/></td> 
+				            <c:if test="${Comment.userId != user.id}">
+				            <td id="flagger"><button type="submit" name="flag${Comment.id}" value="clicked">
 							<img src="http://i.stack.imgur.com/Fh47a.png"/>
+							</c:if>
 							</button></td></td>
-				            <td><c:out value="Total flags: ${Comment.flags}"/></td> 
+							<c:if test="${Comment.userId == user.id}">
+					        	<td id="remover"><button type="submit" name="delete${Comment.id}" value="clicked">
+								<img src="http://log.concept2.com/images/delete.png"/>
+								</button></td>
+							</c:if>
 				        </tr>
 				   </c:forEach>
 			</table>
+			</div>
+			<div class="logey">
 			<input type="Submit" name="log" value="LogOut">
+			</div>
+			<div class="links">
+			<input type="Submit" name="userPage" value="My Page">
 			<c:if test="${user.modded == 1}">
 				<input type="Submit" name="ModLink" value="Moderator Page">
+				</div>
 			</c:if>
 		</form>
-		<!--<button id="fetchComments">Load more comments</button>-->
 	</body>
 </html>

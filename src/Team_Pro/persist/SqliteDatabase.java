@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +93,6 @@ public class SqliteDatabase implements IDatabase {
 						comment.setUserId(resultSet.getInt(index++));
 						comment.setLikes(resultSet.getInt(index++));
 						comment.setFlags(resultSet.getInt(index++));
-						comment.setTag(resultSet.getString(index++));
 						comment.setRemoved(resultSet.getInt(index++));
 						result.add(comment);
 					}
@@ -130,6 +128,39 @@ public class SqliteDatabase implements IDatabase {
 						like.setCommentId(resultSet.getInt(index++));
 						like.setUserId(resultSet.getInt(index++));
 						result.add(like);
+					}
+					
+					return result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	public List<Flag> getFlags() {
+		return executeTransaction(new Transaction<List<Flag>>() {
+			@Override
+			public List<Flag> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from flags"
+					);
+					
+					List<Flag> result = new ArrayList<Flag>();
+					
+					resultSet = stmt.executeQuery();
+					while (resultSet.next()) {
+						Flag flag = new Flag();
+						int index = 1;
+						flag.setId(resultSet.getInt(index++));
+						flag.setCommentId(resultSet.getInt(index++));
+						flag.setUserId(resultSet.getInt(index++));
+						result.add(flag);
 					}
 					
 					return result;
@@ -178,7 +209,7 @@ public class SqliteDatabase implements IDatabase {
 		});
 	}
 	
-	public void addComment(final String text, final int userId, final String tag) {
+	public void addComment(final String text, final int userId) {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
@@ -186,15 +217,14 @@ public class SqliteDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							"insert into comments (text, user_Id, likes, flags, tag, removed) values (?, ?, ?, ?, ?, ?)"
+							"insert into comments (text, user_Id, likes, flags, removed) values (?, ?, ?, ?, ?)"
 					);
 					
 					stmt.setString(1, text);
 					stmt.setInt(2, userId);
 					stmt.setInt(3, 0);
 					stmt.setInt(4, 0);
-					stmt.setString(5, tag);
-					stmt.setInt(6, 0);
+					stmt.setInt(5, 0);
 					
 					stmt.executeUpdate();
 					
@@ -215,6 +245,30 @@ public class SqliteDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							"insert into likes (comment_Id, user_Id) values (?, ?)"
+					);
+					
+					stmt.setInt(1, commentId);
+					stmt.setInt(2, userId);
+					
+					stmt.executeUpdate();
+					
+					return true;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	public void addFlag(final int commentId, final int userId) {
+		executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"insert into flags (comment_Id, user_Id) values (?, ?)"
 					);
 					
 					stmt.setInt(1, commentId);
@@ -304,6 +358,29 @@ public class SqliteDatabase implements IDatabase {
 		});
 	}
 	
+	public void deleteFlag(final int id) {
+		executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"delete from flags where id=?"
+					);
+					
+					stmt.setInt(1, id);
+					
+					stmt.executeUpdate();
+					
+					return true;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
 	public void deleteUser(final int id) {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
@@ -379,42 +456,6 @@ public class SqliteDatabase implements IDatabase {
 		});
 	}
 	
-	public void backUpData() {
-		executeTransaction(new Transaction<Boolean>() {
-			@Override
-			public Boolean execute(Connection conn) throws SQLException {
-				Statement backup = null;
-				
-				try {
-					backup = conn.createStatement();
-					backup.executeUpdate("backup database to  disk='C:/Users/Public/backup.bak'");
-					
-					return true;
-				} finally {
-					DBUtil.closeQuietly(backup);
-				}
-			}
-		});
-	}
-	
-	public void restoreData() {
-		executeTransaction(new Transaction<Boolean>() {
-			@Override
-			public Boolean execute(Connection conn) throws SQLException {
-				Statement restore = null;
-				
-				try {
-					restore = conn.createStatement();
-					restore.executeUpdate("restore database from disk='C:/Users/Public/backup.bak'");
-					
-					return true;
-				} finally {
-					DBUtil.closeQuietly(restore);
-				}
-			}
-		});
-	}
-	
 	public void createTables() {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
@@ -422,6 +463,7 @@ public class SqliteDatabase implements IDatabase {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
 				
 				try {
 					stmt1 = conn.prepareStatement(
@@ -431,7 +473,6 @@ public class SqliteDatabase implements IDatabase {
 							"    user_Id integer," +
 							"    likes integer," +
 							"    flags integer," +
-							"    tag varchar(100)," +
 							"    removed integer" +
 							")");
 					stmt1.executeUpdate();
@@ -456,11 +497,20 @@ public class SqliteDatabase implements IDatabase {
 									")");
 					stmt3.executeUpdate();
 					
+					stmt4 = conn.prepareStatement(
+							"create table flags (" +
+									"    id integer primary key," +
+									"    comment_Id integer," +
+									"    user_Id integer" +
+									")");
+					stmt4.executeUpdate();
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
 				}
 			}
 		});
@@ -483,11 +533,13 @@ public class SqliteDatabase implements IDatabase {
 				List<Comment> commentList;
 				List<Like> likeList;
 				List<User> userList;
+				List<Flag> flagList;
 				
 				try {
 					commentList = InitialData.getComments();
 					likeList = InitialData.getLikes();
 					userList = InitialData.getUsers();
+					flagList = InitialData.getFlags();
 				} catch (IOException | ParseException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -495,17 +547,17 @@ public class SqliteDatabase implements IDatabase {
 				PreparedStatement insertComment = null;
 				PreparedStatement insertLike = null;
 				PreparedStatement insertUser = null;
+				PreparedStatement insertFlag = null;
 
 				try {
-					insertComment = conn.prepareStatement("insert into comments values (?, ?, ?, ?, ?, ?, ?)");
+					insertComment = conn.prepareStatement("insert into comments values (?, ?, ?, ?, ?, ?)");
 					for (Comment comment : commentList) {
 						insertComment.setInt(1, comment.getId());
 						insertComment.setString(2, comment.getText());
 						insertComment.setInt(3, comment.getUserId());
 						insertComment.setInt(4, comment.getLikes());
 						insertComment.setInt(5, comment.getFlags());
-						insertComment.setString(6, comment.getTag());
-						insertComment.setInt(7, comment.getRemoved());
+						insertComment.setInt(6, comment.getRemoved());
 						insertComment.addBatch();
 					}
 					insertComment.executeBatch();
@@ -532,11 +584,21 @@ public class SqliteDatabase implements IDatabase {
 					}
 					insertUser.executeBatch();
 					
+					insertFlag = conn.prepareStatement("insert into flags values (?, ?, ?)");
+					for (Flag flag : flagList) {
+						insertLike.setInt(1, flag.getId());
+						insertLike.setInt(2, flag.getCommentId());
+						insertLike.setInt(3, flag.getUserId());
+						insertLike.addBatch();
+					}
+					insertFlag.executeBatch();
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertComment);
 					DBUtil.closeQuietly(insertLike);
 					DBUtil.closeQuietly(insertUser);
+					DBUtil.closeQuietly(insertFlag);
 				}
 			}
 		});

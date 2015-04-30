@@ -6,7 +6,6 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-import Team_Pro.persist.DatabaseProvider;
 
 public class Main {
 	private static Scanner keyboard;
@@ -24,7 +23,6 @@ public class Main {
 			        @Override
 			        public void run() {
 			        	System.out.println("Saved: " + new java.util.Date().toString());
-			        	DatabaseProvider.getInstance().backUpData();
 			        }
 			    }, 
 			    0, 300000
@@ -36,6 +34,7 @@ public class Main {
 		System.out.println("Shutting down...");
 		shutDown();
 		System.out.println("Server has shut down, exiting");
+		return;
 	}
 	
 	private static void startUp() throws Exception{
@@ -58,19 +57,11 @@ public class Main {
 	}
 	
 	private static void loopme() throws Exception{
-		while (keyboard.hasNextLine()) {
+		while (keyboard.hasNextLine() && looper == 0) {
 			String line = keyboard.nextLine();
 			if (line.trim().toLowerCase().equals("quit")) {
 				looper = 1;
 				break;
-			}
-			else if (line.trim().toLowerCase().equals("backup")) {
-				DatabaseProvider.getInstance().backUpData();
-				System.out.println("backup complete!");
-			} 
-			else if (line.trim().toLowerCase().equals("restore")) {
-				DatabaseProvider.getInstance().restoreData();
-				System.out.println("restore complete!");
 			}
 			else if (line.trim().toLowerCase().equals("restart")) {
 				System.out.println("Restarting server...");

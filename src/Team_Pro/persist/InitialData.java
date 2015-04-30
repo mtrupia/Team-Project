@@ -57,6 +57,28 @@ public class InitialData {
 		}
 	}
 	
+	public static List<Flag> getFlags() throws IOException, ParseException {
+		List<Flag> flagList = new ArrayList<Flag>();
+		ReadCSV readFlag = new ReadCSV("flags.csv");
+		try {
+			while (true) {
+				List<String> tuple = readFlag.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				Flag flag = new Flag();
+				flag.setId(Integer.parseInt(i.next()));
+				flag.setCommentId(Integer.parseInt(i.next()));
+				flag.setUserId(Integer.parseInt(i.next()));
+				flagList.add(flag);
+			}
+			return flagList;
+		} finally {
+			readFlag.close();
+		}
+	}
+	
 	public static List<User> getUsers() throws IOException, ParseException {
 		List<User> userList = new ArrayList<User>();
 		ReadCSV readUser = new ReadCSV("users.csv");

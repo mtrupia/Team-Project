@@ -23,7 +23,7 @@ public class ControllerTest {
 		List<Comment> feed = cont.allPosts();
 		assertEquals(7, feed.size());
 		
-		cont.post("Welcome Everyone", "welcome", 4);
+		cont.post("Welcome Everyone", 4);
 		
 		feed = cont.allPosts();
 		assertEquals(8, feed.size());
@@ -32,7 +32,7 @@ public class ControllerTest {
 	@Test
 	public void testFlagAndLike() throws Exception {
 		for (int i = 0; i < 20; i++){
-			cont.flag(10);
+			//cont.flag(10);
 		}
 		List<Comment> feed = cont.modPosts(0);
 		assertEquals(4, feed.size());
