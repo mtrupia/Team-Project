@@ -9,7 +9,11 @@
 		<style>
 			body{
 				background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #FFFFFF), color-stop(1, #00A3EF));
-				color: gold;
+				background-image: -moz-linear-gradient(top left, #FFFFFF 0%, #00A3EF 100%);
+				background-image: -o-linear-gradient(top left, #FFFFFF 0%, #00A3EF 100%);
+				background-image: -webkit-linear-gradient(top left, #FFFFFF 0%, #00A3EF 100%);
+				color: black;
+				
 			}
 			
 			.table1{
@@ -19,7 +23,7 @@
 				width: 80%;
 				height: 400px;
 				border: 2px solid lightgray;
-			   	background: grey;
+			   	background: white;
 			   	font-family: Lobster;
 			    
 			    
@@ -33,8 +37,8 @@
 				width: 80%;
 				height: 200px;
 				border: 2px solid lightgray;
-			    background: gray;
-			    color: gold;
+			    background: white;
+			    
 			    font-family: Lobster;
 			    padding-left: 10px; 
 			    text-align: left;
@@ -51,7 +55,7 @@
 				linear-gradient(45deg, #343702 0%, #184500 20%, #187546 30%, #006782 40%, #0b1284 50%, #760ea1 60%, #83096e 70%, #840b2a 80%, #b13e12 90%, #e27412 100%);
 				background-size: 470px 470px, 970px 970px, 410px 410px, 610px 610px, 530px 530px, 730px 730px, 100% 100%;
 				background-color: #840b2a;
-				width: 110px;
+				width: 200px;
 				
 				padding: 5px;
 				height: 10%;
@@ -74,6 +78,7 @@
 				background: linear-gradient(top, #878787, #000);
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
+				
 			}
 			.method2 {
 				color: grey;
@@ -83,6 +88,7 @@
 				height: 10%;
 				-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1), rgba(0,0,0,.5) 50%, rgba(0,0,0,1));
 				-webkit-mask-image: linear-gradient(top, rgba(0,0,0,1), rgba(0,0,0,.5) 50%, rgba(0,0,0,1));
+				font-color: gold;
 			}
 			input[type=submit] {
 			    border: 2px solid white;
