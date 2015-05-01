@@ -68,22 +68,17 @@ public class Filter {
 	
 	private static Map<String,String> filter = iniFilter();
 	
-	
-	// If string contains a " " + Key + " ", change key to value.
-	
-	
-	
-	
-	
-	
-	
-	
 	public static String FilterComment(String text){
 		String arr = text;
 		Iterator<Entry<String, String>> it = filter.entrySet().iterator();
 		while (it.hasNext()){
 			Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
-			if (text.toLowerCase().contains(" " + pair.getKey() + " ")) {
+			if (text.split(" ").length == 1) {
+				if (text.toLowerCase().contains(pair.getKey())) {
+					arr = text.toLowerCase().replaceAll(pair.getKey(), pair.getValue());
+				}
+			}
+			if (text.toLowerCase().contains(" " + pair.getKey() + " ") || text.toLowerCase().contains(" " + pair.getKey() + "!") || text.toLowerCase().contains(" " + pair.getKey() + "?") || text.toLowerCase().contains(" " + pair.getKey() + ".") || text.toLowerCase().contains(" " + pair.getKey() + ",")) {
 				arr = text.toLowerCase().replaceAll(pair.getKey(), pair.getValue());
 			}
 		}

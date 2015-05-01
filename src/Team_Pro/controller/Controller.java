@@ -254,7 +254,7 @@ public class Controller {
 		List<Comment> feed = new ArrayList<Comment>();
 		if (users.get(userId).getModded() == 1) {
 			for (int j = 0; j < comments.size(); j++){
-				if (comments.get(j).getRemoved() == 1 && comments.get(j).getFlags() > 5 && comments.get(j).getFlags() != 21){
+				if (comments.get(j).getFlags() > 5 && (comments.get(j).getFlags() != 21)){
 					feed.add(comments.get(j));
 				}
 			}

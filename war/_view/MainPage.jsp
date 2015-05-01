@@ -19,7 +19,7 @@
 			<table>
 				<tr>
 					<td>
-					<textarea rows="4" cols="50" name="text" placeholder="What's going on?" role="textbox" autocomplete="off"></textarea>
+					<textarea rows="3" cols="50" name="text" placeholder="What's going on?" role="textbox" autocomplete="off"></textarea>
 					<div class="postyy">
 					<input type="Submit" name="post" value="Post!">
 					</div>
