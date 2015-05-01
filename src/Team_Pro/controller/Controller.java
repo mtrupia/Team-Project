@@ -11,6 +11,7 @@ public class Controller {
 	private List<User> users;
 	private List<Comment> comments;
 	private List<Like> likes;
+	private List<Flag> flags;
 	IDatabase db;
 	
 	// Initiate Main class
@@ -19,6 +20,7 @@ public class Controller {
 		comments = db.getComments();
 		likes = db.getLikes();
 		users = db.getUsers();
+		flags = db.getFlags();
 	}
 	
 	// create user account; check name; add to users list.
@@ -98,13 +100,13 @@ public class Controller {
 	}
 	
 	// Add a new post to the posts list
-	public void post(String text, String tag, int userId) throws Exception{
+	public void post(String text, int userId) throws Exception{
 		// Create new post
 		if (text.isEmpty()) {
 			return;
 		}
 		text = Filter.FilterComment(text);
-		db.addComment(text, userId, tag);
+		db.addComment(text, userId);
 		comments = db.getComments();
 	}
 	
@@ -185,12 +187,31 @@ public class Controller {
 	} 
 	
 	// flag a comment, if flags = 20, remove it
-	public void flag(int commentId) throws Exception{
+	public void flag(int userId, int commentId) throws Exception{
+		for (Comment posts : userPosts(userId)) {
+			if (posts.getId() == commentId) {
+				return;
+			}
+		}
+		for (Flag flag : db.getFlags()) {
+			if (flag.getUserId() == userId) {
+				if (flag.getCommentId() == commentId) {
+					return;
+				}
+			}
+		}
+		
+		// Create new flag
+		db.addFlag(commentId, userId);
+		flags = db.getFlags();
+		
+		// Update comment flag
 		Comment post = comments.get(commentId);
 		db.updateComment(commentId, post.getLikes(), post.getFlags()+1, post.getRemoved());
 		comments = db.getComments();
 		post = comments.get(commentId);
 		
+		// too many flags?
 		if (post.getFlags() >= 20) {
 			db.updateComment(commentId, post.getLikes(), post.getFlags(), 1);
 			comments = db.getComments();
@@ -211,7 +232,7 @@ public class Controller {
 		List<Comment> allPosts = allPosts();
 		// with this tag
 		for (int i = 0; i < allPosts.size(); i ++){
-			if (allPosts.get(i).getText().contains(search)){
+			if (allPosts.get(i).getText().toLowerCase().contains(search.toLowerCase())){
 				feed.add(allPosts.get(i));
 			}
 		}
@@ -233,7 +254,7 @@ public class Controller {
 		List<Comment> feed = new ArrayList<Comment>();
 		if (users.get(userId).getModded() == 1) {
 			for (int j = 0; j < comments.size(); j++){
-				if (comments.get(j).getRemoved() == 1 && comments.get(j).getFlags() > 5 && comments.get(j).getFlags() != 21){
+				if (comments.get(j).getFlags() > 5 && (comments.get(j).getFlags() != 21)){
 					feed.add(comments.get(j));
 				}
 			}

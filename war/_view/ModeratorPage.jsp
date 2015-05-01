@@ -26,8 +26,6 @@
 			   	background: white;
 			   	font-family: Lobster;
 			    
-			    
-			   	
 			}
 			
 			.table2{

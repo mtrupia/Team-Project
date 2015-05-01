@@ -70,7 +70,7 @@ public class UserPageServlet extends HttpServlet {
 					text = text.substring(32);
 					text = "https://www.youtube.com/embed/" + text;
 				}
-				controller.post(text, tag, user.getId());
+				controller.post(text, user.getId());
 			} else if (req.getParameter("log") != null) {
 				// logout
 				User user = (User) req.getSession().getAttribute("user");

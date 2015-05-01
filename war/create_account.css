@@ -1,0 +1,32 @@
+body{
+	width:1920px;
+    background-color: #4876FF;
+    height:1080px;
+
+
+}
+#create_form{
+height: 600px;
+        font-size: 24px;
+		text-align: center;
+        color: #d4af37;
+        background-color: white;
+        border-style: inset;
+        boarder-width: 10px;
+       	padding: 50px 0 0 55px;
+		margin: 40px 20px 10px 640px;
+		background: #3D59AB;
+        width:600px;
+        font-family: Consolas, monaco, monospace;
+}
+#texts{
+	font-size: 20px;
+	text-align: center;
+	margin-left:0%;
+	padding: 10px;
+	text-align: center;
+
+	position:relative;
+    color:#d4af37;
+    font-family: Georgia;
+}

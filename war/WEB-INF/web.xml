@@ -21,10 +21,6 @@
   	<servlet-class>Team_Pro.servlet.UserPageServlet</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>FetchPostsAjaxServlet</servlet-name>
-    <servlet-class>Team_Pro.servlet.FetchPostsAjaxServlet</servlet-class>
-  </servlet>
-  <servlet>
   	<servlet-name>ModeratorPageServlet</servlet-name>
   	<servlet-class>Team_Pro.servlet.ModeratorPageServlet</servlet-class>
   </servlet>
@@ -43,10 +39,6 @@
 	</servlet-mapping><servlet-mapping>
 		<servlet-name>UserPageServlet</servlet-name>
 		<url-pattern>/UserPage</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-	  <servlet-name>FetchPostsAjaxServlet</servlet-name>
-	  <url-pattern>/ajax/FetchPosts/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ModeratorPageServlet</servlet-name>

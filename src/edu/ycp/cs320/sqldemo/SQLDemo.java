@@ -133,7 +133,11 @@ public class SQLDemo {
 				System.out.print(" ");
 			}
 			String item = row.get(i);
-			System.out.print(PAD.substring(0, colWidths.get(i) - item.length()));
+			if (PAD.length() > 200) {
+				System.out.print(PAD);
+			} else {
+				System.out.print(PAD.substring(0, colWidths.get(i) - item.length()));
+			}
 			System.out.print(item);
 		}
 		System.out.println();
@@ -142,7 +146,11 @@ public class SQLDemo {
 	private static void printSeparator(List<Integer> colWidths) {
 		List<String> sepRow = new ArrayList<String>();
 		for (Integer w : colWidths) {
-			sepRow.add(SEP.substring(0, w));
+			if (SEP.length() > 200) {
+				sepRow.add(SEP);
+			} else {
+				sepRow.add(SEP.substring(0, w));
+			}
 		}
 		printRow(sepRow, colWidths);
 	}
