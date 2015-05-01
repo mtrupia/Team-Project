@@ -3,12 +3,14 @@ package Team_Pro.controller;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Filter {
 	public static Map<String,String> iniFilter(){
 	Map<String,String> Filter = new HashMap<String,String>();
 	Filter.put("ass", "booty");
 	Filter.put("asshole", "jerk");
+	Filter.put("ass hole", "jerk");
 	Filter.put("bastard","illegitimate child");
 	Filter.put("bitch", "lovely person");
 	Filter.put("bitches", "lovely people");
@@ -33,15 +35,17 @@ public class Filter {
 	Filter.put("douche", "nincompoop");
 	Filter.put("fag", "***");
 	Filter.put("fatass", "plump");
-	Filter.put("handjob", "happy feeling") ;
+	Filter.put("handjob", "happy feeling");
+	Filter.put("hand job", "happy feeling");
 	Filter.put("hoe", "friend");
 	Filter.put("ho", "friend");
 	Filter.put("homo", "****");
 	Filter.put("jackass", "nincompoop");
-	Filter.put("jerkoff", "happy time");
+	Filter.put("jack ass", "nincompoop");
 	Filter.put("jizz", "liquid");
 	Filter.put("lesbo", "****");
 	Filter.put("motherfucker", "mother father");
+	Filter.put("mother fucker", "mother father");
 	Filter.put("nigga", "African American");
 	Filter.put("nigger", "African American");
 	Filter.put("niggers", "African Americans");
@@ -64,14 +68,23 @@ public class Filter {
 	
 	private static Map<String,String> filter = iniFilter();
 	
+	
+	// If string contains a " " + Key + " ", change key to value.
+	
+	
+	
+	
+	
+	
+	
+	
 	public static String FilterComment(String text){
-		String arr = text; 
-		
-		Iterator it = filter.entrySet().iterator();
-		while (it.hasNext()) {
+		String arr = text;
+		Iterator<Entry<String, String>> it = filter.entrySet().iterator();
+		while (it.hasNext()){
 			Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
-			if (text.contains(pair.getKey())) {
-				arr = text.replaceAll(pair.getKey(), pair.getValue());
+			if (text.toLowerCase().contains(" " + pair.getKey() + " ")) {
+				arr = text.toLowerCase().replaceAll(pair.getKey(), pair.getValue());
 			}
 		}
 		 return arr;
