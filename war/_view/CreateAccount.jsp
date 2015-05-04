@@ -4,8 +4,13 @@
 
 <html>
 	<head>
-		<title>Log In</title>
+		<title>Create Account</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/create_account.css"> 
+		<style type="text/css">
+		    .error {
+		      color: red;
+		    }
+	    </style>
 	</head>
 
 	<body>
@@ -13,6 +18,7 @@
 		<form id ="create_form" action="${pageContext.servletContext.contextPath}/CreateAccount" method="post">
 		<div id = "texts">
 		
+
 		<p>Please enter account details:</p>
 		<p>Username must be at least 6 characters long!</p>
 		<p>Password must be at least 6 characters long with </p>
@@ -21,6 +27,7 @@
 		<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 		</c:if>
+
 			<table align="center" text-align = "center">
 				<tr>
 					<td class="label">First Name:</td>
