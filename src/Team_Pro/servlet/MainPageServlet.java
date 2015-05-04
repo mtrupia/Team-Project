@@ -110,13 +110,13 @@ public class MainPageServlet extends HttpServlet {
 					if (req.getParameter("flag" + Integer.toString(testId)) != null) {
 						req.removeAttribute("flag" + Integer.toString(testId));
 						User user = (User) req.getSession().getAttribute("user");
-						controller.flag(user.getId(), testId);
+						controller.flag(user.getId(), testId-1);
 						resp.sendRedirect(req.getContextPath() + "/MainPage");
 						return;
 					}
 					if (req.getParameter("delete" + Integer.toString(testId)) != null) {
 						req.removeAttribute("delete" + Integer.toString(testId));
-						controller.deletePost(testId);
+						controller.deletePost(testId-1);
 						resp.sendRedirect(req.getContextPath() + "/MainPage");
 						return;
 					}

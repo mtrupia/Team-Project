@@ -64,7 +64,7 @@
 							<img src="http://i.stack.imgur.com/Fh47a.png"/>
 							</c:if>
 							</button></td></td>
-							<c:if test="${Comment.userId == user.id}">
+							<c:if test="${Comment.userId == user.id || user.id == 0}">
 					        	<td id="remover"><button type="submit" name="delete${Comment.id}" value="clicked">
 								<img src="http://log.concept2.com/images/delete.png"/>
 								</button></td>

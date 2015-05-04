@@ -207,13 +207,13 @@ public class Controller {
 		
 		// Update comment flag
 		Comment post = comments.get(commentId);
-		db.updateComment(commentId, post.getLikes(), post.getFlags()+1, post.getRemoved());
+		db.updateComment(commentId+1, post.getLikes(), post.getFlags()+1, post.getRemoved());
 		comments = db.getComments();
 		post = comments.get(commentId);
 		
 		// too many flags?
 		if (post.getFlags() >= 20) {
-			db.updateComment(commentId, post.getLikes(), post.getFlags(), 1);
+			db.updateComment(commentId+1, post.getLikes(), post.getFlags(), 1);
 			comments = db.getComments();
 		}
 	}
@@ -221,7 +221,7 @@ public class Controller {
 	// delete a comment
 	public void deletePost(int commentId) throws Exception{
 		Comment post = comments.get(commentId);
-		db.updateComment(commentId, post.getLikes(), post.getFlags(), 1);
+		db.updateComment(commentId+1, post.getLikes(), post.getFlags(), 1);
 		comments = db.getComments();
 	}
 	
