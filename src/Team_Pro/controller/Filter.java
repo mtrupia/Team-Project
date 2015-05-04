@@ -69,7 +69,7 @@ public class Filter {
 	private static Map<String,String> filter = iniFilter();
 	
 	public static String FilterComment(String text){
-		String arr = text;
+		String arr = text + " "; //space added to detect curse at end of comment
 		Iterator<Entry<String, String>> it = filter.entrySet().iterator();
 		while (it.hasNext()){
 			Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
@@ -78,7 +78,7 @@ public class Filter {
 					arr = text.toLowerCase().replaceAll(pair.getKey(), pair.getValue());
 				}
 			}
-			if (text.toLowerCase().contains(" " + pair.getKey() + " ") || text.toLowerCase().contains(" " + pair.getKey() + "!") || text.toLowerCase().contains(" " + pair.getKey() + "?") || text.toLowerCase().contains(" " + pair.getKey() + ".") || text.toLowerCase().contains(" " + pair.getKey() + ",")) {
+			if (text.toLowerCase().contains(pair.getKey() + " ") || text.toLowerCase().contains(pair.getKey() + "!") || text.toLowerCase().contains(pair.getKey() + "?") || text.toLowerCase().contains(pair.getKey() + ".") || text.toLowerCase().contains(pair.getKey() + ",")) {
 				arr = text.toLowerCase().replaceAll(pair.getKey(), pair.getValue());
 			}
 		}

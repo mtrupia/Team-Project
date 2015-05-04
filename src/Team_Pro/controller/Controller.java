@@ -105,7 +105,7 @@ public class Controller {
 		if (text.isEmpty()) {
 			return;
 		}
-		text = Filter.FilterComment(text + " "); //Adds space at the end so the filter can detect curses at the end of a comment.
+		text = Filter.FilterComment(text);
 		db.addComment(text, userId);
 		comments = db.getComments();
 	}
