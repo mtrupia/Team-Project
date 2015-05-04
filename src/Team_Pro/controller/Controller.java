@@ -210,7 +210,7 @@ public class Controller {
 		db.updateComment(commentId+1, post.getLikes(), post.getFlags()+1, post.getRemoved());
 		comments = db.getComments();
 		post = comments.get(commentId);
-		
+		// s
 		// too many flags?
 		if (post.getFlags() >= 20) {
 			db.updateComment(commentId+1, post.getLikes(), post.getFlags(), 1);
