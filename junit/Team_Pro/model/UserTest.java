@@ -2,74 +2,71 @@ package Team_Pro.model;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import Team_Pro.model.User;
-import Team_Pro.persist.DatabaseProvider;
 
 public class UserTest {
-	private List<User> users;
+	private User me;
 	
 	@Before
 	public void setUp() {
-		try {
-			users = DatabaseProvider.getInstance().getUsers();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// print accounts
-		for (int i = 0; i < users.size(); i++) {
-			System.out.printf(users.get(i).getId() + " " + users.get(i).getFName() + " " + users.get(i).getPassword());
-			System.out.println();
-		}
-		
+		me = new User();
+	}
+	
+	@Test
+	public void testAll() {
+		//User(int id, String fname, String lname, String username, String password, int logged, int modded);
+		me = new User(0, "Mike", "T", "mtrupia", "m1234", 0, 1);
+		assertEquals(0, me.getId());
+		assertEquals("Mike", me.getFName());
+		assertEquals("T", me.getLName());
+		assertEquals("mtrupia", me.getUserName());
+		assertEquals("m1234", me.getPassword());
+		assertEquals(0, me.getLogged());
+		assertEquals(1, me.getModded());
 	}
 	
 	@Test
 	public void testId() {
-		assertEquals(0, users.get(0).getId());
-		users.get(0).setId(0);
-		assertEquals(0, users.get(0).getId());
+		me.setId(0);
+		assertEquals(0, me.getId());
 	}
 	
+	@Test
 	public void testFName() {
-		assertEquals("Admin", users.get(0).getFName());
-		users.get(0).setFName("Admin");
-		assertEquals("Admin", users.get(0).getFName());
+		me.setFName("Mike");
+		assertEquals("Mike", me.getFName());
 	}
 	
+	@Test
 	public void testLName() {
-		assertEquals("Admin", users.get(0).getLName());
-		users.get(0).setLName("Admin");
-		assertEquals("Admin", users.get(0).getLName());
+		me.setLName("T");
+		assertEquals("T", me.getLName());
 	}
 	
+	@Test
 	public void testUserName() {
-		assertEquals("Admin", users.get(0).getUserName());
-		users.get(0).setUserName("Admin");
-		assertEquals("Admin", users.get(0).getUserName());
+		me.setUserName("mtrupia");
+		assertEquals("mtrupia", me.getUserName());
 	}
 	
+	@Test
 	public void testPassword() {
-		assertEquals("Admin", users.get(0).getPassword());
-		users.get(0).setPassword("Admin");
-		assertEquals("Admin", users.get(0).getPassword());
+		me.setPassword("m1234");
+		assertEquals("m1234", me.getPassword());
 	}
 	
+	@Test
 	public void testLogged() {
-		assertEquals(0, users.get(0).getLogged());
-		users.get(0).setLogged(0);
-		assertEquals(0, users.get(0).getLogged());
+		me.setLogged(0);
+		assertEquals(0, me.getLogged());
 	}
 	
+	@Test
 	public void testSetMod() {
-		assertEquals(1, users.get(0).getModded());
-		users.get(0).setModded(1);
-		assertEquals(1, users.get(0).getModded());
+		me.setModded(1);
+		assertEquals(1, me.getModded());
 	}
 }

@@ -10,7 +10,7 @@
 
 	<body>
 	<div class="titler">
-		<h1>NameLess</h1>
+		<h1>Anonymous Comments</h1>
 	</div>
 		<form class="posty" action="${pageContext.servletContext.contextPath}/MainPage" method="post">
 			<div class="showy">

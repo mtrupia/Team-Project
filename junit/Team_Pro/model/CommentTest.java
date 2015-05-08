@@ -2,74 +2,70 @@ package Team_Pro.model;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import Team_Pro.model.Comment;
-import Team_Pro.persist.DatabaseProvider;
 
 public class CommentTest {
-	private List<Comment> comment;
+	private Comment me;
 	
 	@Before
 	public void setUp() {
-		try {
-			comment = DatabaseProvider.getInstance().getComments();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// print posts
-		for (int i = 0; i < comment.size(); i++) {
-			System.out.printf("%s %s %s %s", comment.get(i).getId(), comment.get(i).getText(), comment.get(i).getUserId(), comment.get(i).getRemoved());
-			System.out.println();
-		}
-		
+		me = new Comment();
+	}
+	
+	@Test
+	public void testSetAll() {
+		me = new Comment(0, "hi", 1, 0, 0, 0, "hi");
+		assertEquals(0, me.getId());
+		assertEquals("hi", me.getText());
+		assertEquals(1, me.getLikes());
+		assertEquals(0, me.getFlags());
+		assertEquals(0, me.getRemoved());
+		assertEquals(0, me.getUserId());
+		assertEquals("hi", me.getTag());
 	}
 	
 	@Test
 	public void testSetId() {
-		assertEquals(0, comment.get(0).getId());
-		comment.get(0).setId(0);
-		assertEquals(0, comment.get(0).getId());
+		me.setId(0);
+		assertEquals(0, me.getId());
 	}
 	
+	@Test
 	public void testSetComment() {
-		assertEquals("This is just a test post to make sure this can go on forever and so forth, please ignore until ready to delete my man!", comment.get(0).getText());
-		comment.get(0).setText("This is just a test post to make sure this can go on forever and so forth, please ignore until ready to delete my man!");
-		assertEquals("This is just a test post to make sure this can go on forever and so forth, please ignore until ready to delete my man!", comment.get(0).getText());
+		me.setText("hi");
+		assertEquals("hi", me.getText());
 	}
 	
+	@Test
 	public void testSetLikes() {
-		assertEquals(1, comment.get(0).getLikes());
-		comment.get(0).setLikes(1);
-		assertEquals(1, comment.get(0).getLikes());
+		me.setLikes(1);
+		assertEquals(1, me.getLikes());
 	}
-
+	
+	@Test
 	public void testSetTag() {
-		assertEquals("ADMIN", comment.get(0).getTag());
-		comment.get(0).setTag("ADMIN");
-		assertEquals("ADMIN", comment.get(0).getTag());
+		me.setTag("hi");
+		assertEquals("hi", me.getTag());
 	}
 
+	@Test
 	public void testSetFlags() {
-		assertEquals(0, comment.get(0).getFlags());
-		comment.get(0).setFlags(0);
-		assertEquals(0, comment.get(0).getFlags());
+		me.setFlags(0);
+		assertEquals(0, me.getFlags());
 	}
 
+	@Test
 	public void testSetRemoved() {
-		assertEquals(0, comment.get(0).getRemoved());
-		comment.get(0).setRemoved(0);
-		assertEquals(0, comment.get(0).getRemoved());
+		me.setRemoved(0);
+		assertEquals(0, me.getRemoved());
 	}
 
+	@Test
 	public void testSetUserId() {
-		assertEquals(0, comment.get(0).getUserId());
-		comment.get(0).setUserId(0);
-		assertEquals(0, comment.get(0).getUserId());
+		me.setUserId(0);
+		assertEquals(0, me.getUserId());
 	}
 }

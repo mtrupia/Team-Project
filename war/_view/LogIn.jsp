@@ -4,7 +4,7 @@
 
 <html>
 	<head>	
-		<title>Log In</title>
+		<title>Login</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/LogIn.css"> 
 		<style type="text/css">
 		    .error {
@@ -18,7 +18,7 @@
 			<div class="error">${errorMessage}</div>
 		</c:if>
 		<div id = "Title">
-			TeamPro WebSite
+			Anonymous Comments
 		</div>
 		<form id="login_form" action="${pageContext.servletContext.contextPath}/LogIn" method="post">
 			<div id = "discription" >

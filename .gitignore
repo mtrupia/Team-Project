@@ -1,4 +1,3 @@
 /bin
 /test-bin
-/*.db
 /war/WEB-INF/classes

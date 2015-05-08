@@ -68,20 +68,35 @@ public class Filter {
 	
 	private static Map<String,String> filter = iniFilter();
 	
-	public static String FilterComment(String text){
-		String arr = text + " "; //space added to detect curse at end of comment
+	public static String FilterComment(String txt){
+		String arr[] = txt.split(" ");
+		String returnme = "";
 		Iterator<Entry<String, String>> it = filter.entrySet().iterator();
 		while (it.hasNext()){
 			Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
-			if (text.split(" ").length == 1) {
-				if (text.toLowerCase().contains(pair.getKey())) {
-					arr = text.toLowerCase().replaceAll(pair.getKey(), pair.getValue());
+			for (int i = 0; i < arr.length; i++) {
+				if (arr[i].toLowerCase().equals(pair.getKey())) {
+					arr[i] = pair.getValue();
+				} else if (arr[i].toLowerCase().contains(pair.getKey() + ".")) {
+					arr[i] = arr[i].replaceAll(pair.getKey() + ".", pair.getValue() + ".");
+				} else if (arr[i].toLowerCase().contains(pair.getKey() + "!")) {
+					arr[i] = arr[i].replaceAll(pair.getKey() + "!", pair.getValue() + "!");
+				} else if (arr[i].toLowerCase().contains(pair.getKey() + "?")) {
+					arr[i] = arr[i].replace(pair.getKey() + "?", pair.getValue() + "?");
+				} else if (arr[i].toLowerCase().contains(pair.getKey() + ",")) {
+					arr[i] = arr[i].replaceAll(pair.getKey() + ",", pair.getValue() + ",");
+				} else if (arr[i].toLowerCase().contains(pair.getKey() + "\n")) {
+					arr[i] = arr[i].replaceAll(pair.getKey() + "\n", pair.getValue() + "\n");
 				}
 			}
-			if (text.toLowerCase().contains(pair.getKey() + " ") || text.toLowerCase().contains(pair.getKey() + "!") || text.toLowerCase().contains(pair.getKey() + "?") || text.toLowerCase().contains(pair.getKey() + ".") || text.toLowerCase().contains(pair.getKey() + ",")) {
-				arr = text.toLowerCase().replaceAll(pair.getKey(), pair.getValue());
+		}
+		for (int i = 0; i < arr.length; i++) {
+			if (i != 0) {
+				returnme = returnme + " " + arr[i];
+			} else {
+				returnme = arr[0];
 			}
 		}
-		 return arr;
+		return returnme;
 	}
 }

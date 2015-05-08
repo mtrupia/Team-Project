@@ -40,7 +40,7 @@ public class Main {
 	private static void startUp() throws Exception{
 		server = new Server(8081);
 		WebAppContext handler = new WebAppContext();
-		handler.setContextPath("/Nameless");
+		handler.setContextPath("/anonymouscomments");
 		handler.setWar("./war"); // web app is in the war directory of the project
 		server.setHandler(handler);
 		
