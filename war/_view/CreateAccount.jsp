@@ -6,19 +6,12 @@
 	<head>
 		<title>Create Account</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/create_account.css"> 
-		<style type="text/css">
-		    .error {
-		      color: red;
-		    }
-	    </style>
 	</head>
 
 	<body>
-		
+		<div class="forme">
 		<form id ="create_form" action="${pageContext.servletContext.contextPath}/CreateAccount" method="post">
 		<div id = "texts">
-		
-
 		<p>Please enter account details:</p>
 		<p>Username must be at least 6 characters long!</p>
 		<p>Password must be at least 6 characters long with </p>
@@ -50,5 +43,6 @@
 			<input type="Submit" name="create" size="5" style = "font-size: 24px" style=" height: 30px;"value="Create Account">
 			<input type="Submit" name="cancel" size="5" style = "font-size: 24px" style = "height = "30px;" value="Log-In">
 		</form>
+		</div>
 	</body>
 </html>

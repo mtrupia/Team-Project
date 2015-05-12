@@ -1,32 +1,38 @@
 body{
-	width:1920px;
 	background-image: url("http://www.hdwallpapers.eu/wp/fractal-0000210-1920x1080.jpg");
-
-
-
+}
+.error {
+	color:red;
+	font-size:15px;
 }
 #create_form{
-height: 600px;
         font-size: 24px;
 		text-align: center;
         color: #d4af37;
         background-color: white;
         border-style: inset;
-        boarder-width: 10px;
-       	padding: 50px 0 0 55px;
-		margin: 40px 20px 10px 640px;
-		background: #3D59AB;
-        width:600px;
+		background: #0f318a;
         font-family: Consolas, monaco, monospace;
+        margin-top:10%;
+		margin-left:30%;
+		margin-right:30%;
+}
+.formme {
+	text-align: center;
 }
 #texts{
+	margin:10px;
 	font-size: 20px;
 	text-align: center;
-	margin-left:0%;
-	padding: 10px;
-	text-align: center;
-
-	position:relative;
     color:#d4af37;
     font-family: Georgia;
+}
+input {
+	margin:10px;
+	color: #d4af37;
+	background-color: #2785b1;
+	border: #0f0c45;
+}
+input:hover {
+	background-color:#227197;
 }

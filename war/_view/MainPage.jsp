@@ -44,9 +44,11 @@
 				        <tr align="center">
 				            <c:choose>
 							<c:when test="${fn:contains(Comment.text, 'youtube')}">
-						    	<td id="texter">
+						    	<div class="text9000">
+						    	<td id="texter" align="center">
 						    	<iframe width="300" height="215" src="${Comment.text}" frameborder="0" allowfullscreen></iframe>
 								</td>
+								</div>
 						    </c:when>
 						    <c:when test="${fn:contains(Comment.text, 'http')}">
 						        <td id="texter"><img src="${Comment.text}" width="300" height="215" /></td>

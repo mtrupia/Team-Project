@@ -6,29 +6,25 @@
 	<head>	
 		<title>Login</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/LogIn.css"> 
-		<style type="text/css">
-		    .error {
-		      color: red;
-		    }
-	    </style>
 	</head>
 
 	<body>
-		<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-		</c:if>
 		<div id = "Title">
 			Anonymous Comments
 		</div>
+		<div class="formme">
 		<form id="login_form" action="${pageContext.servletContext.contextPath}/LogIn" method="post">
 			<div id = "discription" >
 			<p>
-			<marquee behavior=scroll direction="right" scrollamount="15">Team Pro Rocks!</marquee>
+			<marquee behavior=scroll direction="center" scrollamount="2">Anonymous Comments Rock!</marquee>
 			</p>
 			</div>
-			<div id="login_label">Log In: </div>
+			<div id="login_label">Please Log In</div>
 			<div id="login_table_container">
 			<div id = "tables">
+			<c:if test="${! empty errorMessage}">
+				<div class="error">${errorMessage}</div>
+			</c:if>
 			<table>
 				<tr>
 					<td class="label">Username:</td>
@@ -39,10 +35,11 @@
 					<td><input type="password" name="pass" style = "font-size: 24px" size="5" style="height: 30px;"" value="${pass}" /></td>
 				</tr>
 			</table>
-			<input type="Submit" name="log" size="5" style = "font-size: 24px" style=" height: 30px;" value="Log-In">
+			<input type="Submit" name="log" size="5" style = "font-size: 24px" style=" height: 30px;" value="Login">
 			<input type="Submit" name="create" value="Create Account" size="5" style = "font-size: 24px" style = "height = "30px;" value="Create Account">
 			</div>
 			</div>
 		</form>
+		</div>
 	</body>
 </html>
